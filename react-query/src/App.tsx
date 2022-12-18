@@ -1,18 +1,7 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import "./App.css";
+import React from "react";
 
-const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <div className="App">
-      <QueryClientProvider client={queryClient}></QueryClientProvider>
-    </div>
-  );
-}
+const App = () => {
+  return <div>Hello Pokedex</div>;
+};
 
 export default App;
