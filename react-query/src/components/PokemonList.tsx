@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import usePokemon from "../hooks/usePokemon";
 
 const Base = styled.div`
   margin-top: 24px;
@@ -44,19 +45,41 @@ const Index = styled.p`
   color: #d1d5db;
 `;
 
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  hegiht: calc(100vh - 180px);
+`;
+
+const Loading = styled.div``;
+
 const getImageUrl = (index: number): string =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
 
 const PokemonList: React.FC = () => {
+  const { isLoading, isError, data } = usePokemon();
+  const formatNumbering = (index: number): string => {
+    return `#${String(index).padStart(3, "0")}`;
+  };
   return (
     <Base>
-      <List>
-        <LIstItem>
-          <Image src={getImageUrl(1)} />
-          <Name>hahahaha</Name>
-          <Index>###1</Index>
-        </LIstItem>
-      </List>
+      {isLoading || isError ? (
+        <LoadingWrapper>
+          <Loading src="/loading.gif" alt="loading" />
+        </LoadingWrapper>
+      ) : (
+        <List>
+          {data?.data.results.map((pokemon, idx) => (
+            <LIstItem key={pokemon.name}>
+              <Image src={getImageUrl(idx + 1)} />
+              <Name>{pokemon.name}</Name>
+              <Index>{formatNumbering(idx + 1)}</Index>
+            </LIstItem>
+          ))}
+        </List>
+      )}
     </Base>
   );
 };
