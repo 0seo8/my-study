@@ -1,7 +1,12 @@
 import React from "react";
+import PokemonList from "../components/PokemonList";
 
-const indexPage = () => {
-  return <div>indexPage</div>;
+const IndexPage: React.FC = () => {
+  return (
+    <div>
+      <PokemonList />
+    </div>
+  );
 };
 
-export default indexPage;
+export default IndexPage;
