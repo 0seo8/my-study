@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, useQueries } from "react-query";
+import { UseQueryResult } from "react-query/types/react/types";
 
 import { PokemonResponse } from "../types";
 
@@ -8,7 +9,9 @@ const pokemonApi = (id?: string) =>
     params: { limit: 151 },
   });
 
-const usePokemon = <T>(id?: string): UseQueryResult<AxiosResponse> => {
+const usePokemon = <T>(
+  id?: string
+): UseQueryResult<AxiosResponse<T>, Error> => {
   return useQuery(id ? ["pokemon", id] : "pokemon", () => pokemonApi(id));
 };
 

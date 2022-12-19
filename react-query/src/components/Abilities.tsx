@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 import { Ability, Color, EffectEntry } from "../types";
 import { mapColorToHex } from "../utils";
+import useAbilites from "../hooks/useAbilities";
 
 const Title = styled.h4<{ color: string }>`
   margin: 0;
@@ -50,11 +51,21 @@ interface Props {
   color?: Color;
 }
 
-const Abilities: React.FC<Props> = ({ color }) => {
+const Abilities: React.FC<Props> = ({ color, abilites }) => {
+  const results = useAbilites(abilites);
   return (
     <Base>
       <Title color={mapColorToHex(color?.name)}></Title>
       <List>
+        {results.map(
+          ({ data }, idx) =>
+            data && (
+              <ListItem key={idx}>
+                <Label>{data.data.name}</Label>
+                <Description>{data.data.effect_entries[0].effect}</Description>
+              </ListItem>
+            )
+        )}
         <ListItem>
           <Label>Label</Label>
           <Description>Description</Description>
