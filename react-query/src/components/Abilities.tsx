@@ -55,7 +55,7 @@ const Abilities: React.FC<Props> = ({ color, abilites }) => {
   const results = useAbilites(abilites);
   return (
     <Base>
-      <Title color={mapColorToHex(color?.name)}></Title>
+      <Title color={mapColorToHex(color?.name)}>Abilities</Title>
       <List>
         {results.map(
           ({ data }, idx) =>

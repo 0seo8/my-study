@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { Color } from "../types";
+import { Chain, Color } from "../types";
 import { mapColorToHex } from "../utils";
+import useEvolutionChain from "../hooks/useEvolutionChain";
+import EvolutionStage from "./EvolutionStage";
 
 const Base = styled.div`
   margin-top: 32px;
@@ -59,10 +61,50 @@ interface Props {
 }
 
 const Evolution: React.FC<Props> = ({ url, color }) => {
+  const { isSuccess, isError, isLoading, data } = useEvolutionChain(url);
+  const [evolutionchain, setEvolutionChain] = useState<
+    Array<{
+      from: { name: string; url: string };
+      to: { name: string; url: string };
+      level: number;
+    }>
+  >([]);
+  useEffect(() => {
+    const makeEvolutionChain = (chain: Chain) => {
+      if (chain.evolves_to.length) {
+        const [evolvesTo] = chain.evolves_to;
+
+        const from = chain.species;
+        const to = evolvesTo.species;
+        const level = evolvesTo.evolution_details[0].min_level;
+
+        setEvolutionChain((prev) => [...prev, { from, to, level }]);
+
+        makeEvolutionChain(chain.evolves_to[0]);
+      }
+    };
+
+    isSuccess && data && makeEvolutionChain(data.data.chain);
+
+    return (): void => {};
+  }, []);
+
   return (
     <Base>
       <Title color={mapColorToHex(color?.name)}>Evolution</Title>
-      <List></List>
+      {evolutionchain?.length ? (
+        <List>
+          {evolutionchain.map(({ from, to, level }, idx) => (
+            <EvolutionStage level={level} from={from} to={to} />
+          ))}
+        </List>
+      ) : (
+        <EmptyWrapper>
+          <Empty color={mapColorToHex(color?.name)}>
+            This Pokémon does not evolve.
+          </Empty>
+        </EmptyWrapper>
+      )}
     </Base>
   );
 };

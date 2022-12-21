@@ -15,4 +15,16 @@ const usePokemon = <T>(
   return useQuery(id ? ["pokemon", id] : "pokemon", () => pokemonApi(id));
 };
 
+export const usePokemonQueries = (
+  names: string[]
+): Array<UseQueryResult<AxiosResponse<PokemonResponse>, Error>> => {
+  const queries = names.map((name, idx) => ({
+    queryKey: ["evolution", `${name}_${idx}`],
+    queryFn: () => pokemonApi(name),
+  }));
+
+  return useQueries(queries) as Array<
+    UseQueryResult<AxiosResponse<PokemonResponse>, Error>
+  >;
+};
 export default usePokemon;
