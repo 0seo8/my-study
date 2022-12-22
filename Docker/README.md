@@ -99,3 +99,17 @@ $ docker rmi httpd
 ```
 
 ## 네트워크
+
+```shell
+//실행중인 컨테이너 확인
+$ docker ps
+
+// ws3이름을 생성, 8081포트를 컨테이너 80포트와 연결
+$ docker run --name ws3 -p 8081:80 httpd
+```
+
+`http://localhost:8081/index.html`에 접속하여 확인
+
+![](https://velog.velcdn.com/images/0seo8/post/14770927-c82c-407e-8999-6a112a060ea7/image.png)
+
+## 명령어 실행
