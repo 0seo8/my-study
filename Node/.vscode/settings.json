@@ -6,6 +6,7 @@
     "editor.insertSpaces": true,
     "editor.detectIndentation": false
   },
+  //json인데 코멘트를 달 수 있음
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2,
