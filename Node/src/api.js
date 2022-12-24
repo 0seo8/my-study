@@ -8,9 +8,30 @@
  */
 
 /**
+ * @typedef Post
+ * @property {string} id
+ * @property {string} title
+ * @property {string} content
+ */
+
+/** @type {Post[]} */
+const posts = [
+  {
+    id: 'my_first_post',
+    title: 'my First Post',
+    content: 'Hello!',
+  },
+  {
+    id: 'my_second_post',
+    title: '두 번째 포스팅',
+    content: 'Hi',
+  },
+]
+
+/**
  * @typedef APIResponse
  * @property {number} statusCode
- * @property {*} body
+ * @property {string | Object} body
  */
 
 /**
