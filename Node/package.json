@@ -9,6 +9,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "16.14.2"
+  },
   "devDependencies": {
     "@types/node": "^18.11.17",
     "eslint": "^8.30.0",
