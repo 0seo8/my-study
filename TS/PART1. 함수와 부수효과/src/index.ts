@@ -1,1 +1,1 @@
-import "./CH3-clip4.ts";
+import "./CH4-clip4.ts";
