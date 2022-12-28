@@ -1,12 +1,14 @@
 import "./index.css";
 import { cart, Item } from "./cart";
+import * as o from "./option";
 
 const stockItem = (item: Item): string => {
+  //discount를 option으로 구현
+  const optionDiscountPrice = o.fromUndefined(item.discountPrice);
+  const discountPrice = o.getOrElse(optionDiscountPrice, 0);
   let saleText = "";
-  let discountPrice = 0;
-  if (item.discountPrice !== undefined) {
-    saleText = `(${item.discountPrice}원 할인)`;
-    discountPrice = item.discountPrice;
+  if (o.isSome(optionDiscountPrice)) {
+    saleText = `(${discountPrice}원 할인)`;
   }
 
   return `
@@ -60,10 +62,7 @@ const totalPrice = (list: Array<Item>): string => {
   );
 
   const totalDiscountPrice = totalCalculator(list, (item) => {
-    let discountPrice = 0;
-    if (item.discountPrice !== undefined) {
-      discountPrice = item.discountPrice;
-    }
+    const discountPrice = o.getOrElse(o.fromUndefined(item.discountPrice), 0);
     return discountPrice * item.quantity;
   });
 

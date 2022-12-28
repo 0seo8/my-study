@@ -24,7 +24,7 @@ export const none = (): Option<never> => ({ _tag: "None" });
 
 //Some타입인지, none타입인지 알 수 있는 함수
 export const isSome = <A>(oa: Option<A>): oa is Some<A> => oa._tag === "Some";
-export const isNonw = <A>(oa: Option<A>): oa is None => oa._tag === "None";
+export const isNone = <A>(oa: Option<A>): oa is None => oa._tag === "None";
 
 //undefined를 사용해 값의 부재를 나타내주는 타입을 옵션으로 변환해주는 함수.
 //undeinded와 union으로 조합된 모든 타입을 인자로 받아서, 옵션을 리턴해야함
@@ -33,4 +33,9 @@ export const fromUndefined = <A>(a: A | undefined): Option<A> => {
   return some(a);
 };
 
-// 값이 없으면 지정된 값을 사용하고, 있으면 해당 값을 사용한다.
+export const getOrElse = <A>(oa: Option<A>, defaultValue: A): A => {
+  // 값이 없으면 지정된 값을 사용하고,
+  if (isNone(oa)) return defaultValue;
+  // 값이 있으면 해당 값을 사용한다.
+  return oa.value;
+};
