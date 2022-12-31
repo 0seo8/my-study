@@ -194,10 +194,10 @@ const { data, isError, isLoading, error } = useQuery(
 ## 7. 페이지네이션
 
 ```js
-xport function Posts() {
+export function Posts() {
   const [currentPage, setCurrentPage] = useState(1);
 
-// 배열에 currentPage를 추가
+  // 배열에 currentPage를 추가
   const { data, isError, isLoading, error } = useQuery(
     ["post", currentPage],
     () => fetchPosts(currentPage),
@@ -207,6 +207,93 @@ xport function Posts() {
   );
 
   return (
+    <div className="pages">
+      <button
+        disabled={currentPage <= 1}
+        onClick={() => {
+          setCurrentPage((prev) => prev - 1);
+        }}
+      >
+        Previous page
+      </button>
+      <span>Page {currentPage + 1}</span>
+      <button
+        disabled={currentPage >= maxPostPage}
+        onClick={() => {
+          setCurrentPage((prev) => prev + 1);
+        }}
+      >
+        Next page
+      </button>
+    </div>
+  );
+}
+```
+
+위의 경우 다음 또는 이전 버튼을 클릭하는 경우 로딩으로 인해 사용자 경험을 떨어트리게 됩니다.
+
+## 8. Prefeching
+
+- 프리페칭이란 데이터를 캐시에 추가하며 구성할 수 있습니다. 기본값은 stale(만료)입니다.
+
+```js
+//1. useQueryClient를 가지고 옴
+import { useQuery, useQueryClient } from "react-query";
+
+async function fetchPosts(pageNum) {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${pageNum}`
+  );
+  return response.json();
+}
+
+export function Posts() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  //2. queryClient를 생성
+  const queryClient = useQueryClient();
+
+  //3. useEffect을 통해
+  useEffect(() => {
+    if (currentPage < maxPostPage) {
+      const nextPage = currentPage + 1;
+      queryClient.prefetchQuery(["posts", nextPage], () =>
+        fetchPosts(nextPage)
+      );
+    }
+  }, [currentPage, queryClient]);
+
+  //4. keepPreviousData: true, 추가
+  const { data, isError, isLoading, error } = useQuery(
+    ["post", currentPage],
+    () => fetchPosts(currentPage),
+    {
+      staleTime: 2000,
+      keepPreviousData: true,
+    }
+  );
+  if (isLoading) return <h3>Loading</h3>;
+  if (isError)
+    return (
+      <>
+        <h3>Oops, Something is wrong</h3>
+        <p>{error.toString()}</p>
+      </>
+    );
+
+  return (
+    <>
+      <ul>
+        {data.map((post) => (
+          <li
+            key={post.id}
+            className="post-title"
+            onClick={() => setSelectedPost(post)}
+          >
+            {post.title}
+          </li>
+        ))}
+      </ul>
       <div className="pages">
         <button
           disabled={currentPage <= 1}
@@ -226,8 +313,9 @@ xport function Posts() {
           Next page
         </button>
       </div>
+      <hr />
+      {selectedPost && <PostDetail post={selectedPost} />}
+    </>
   );
 }
 ```
-
-## 8. Prefeching
