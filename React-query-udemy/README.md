@@ -123,7 +123,7 @@ if (isError)
 - 데이터 리페칭 실행에는 만료된 데이터 외에도, 여러 트리거가 있습니다.
   - ex)컴포넌트가 다시 마운트 되거나, 윈도우가 다시 포커스 된 경우 등등
 - 단, 만료된 데이터인 경우에만 리페칭이 실시됩니다.
-- 데이터가 만료되었다고 판단하기 전까지 허영하는 시간이 staleTime입니다.
+- 데이터가 만료되었다고 판단하기 전까지 허용하는 시간이 staleTime입니다.
 
 ```js
 const { data, isError, isLoading, error } = useQuery("post", fetchPosts, {
