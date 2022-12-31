@@ -27,11 +27,8 @@ export function PostDetail({ post }) {
   // replace with useQuery
   // const data = [];
   const { data, isError, isLoading, error } = useQuery(
-    "getPost",
-    () => fetchComments(post.id),
-    {
-      refetchOnWindowFocus: "always",
-    }
+    ["comments", post.id],
+    () => fetchComments(post.id)
   );
 
   if (isLoading) return <h3>Loading</h3>;
