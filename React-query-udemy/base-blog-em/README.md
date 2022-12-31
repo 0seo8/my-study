@@ -324,4 +324,16 @@ export function Posts() {
 
 ### isFetching
 
+- async 쿼리 함수가 해결되지 않았을 때 true, 아직 데이터를 가지고 오지 않은 상태
+
+### isLoading
+
+- isFetching이 참이면서, 쿼리에 대해 캐시된 데이터가 없는 상태를 뜻함
+
+---
+
+## 10. Mutations
+
+- 서버에 데이터를 업데이트하도록 서버에 네트워크 호출을 실행
+- 블로그의 포스트를 추가, 삭제, 변경
 -
