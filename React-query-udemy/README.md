@@ -59,3 +59,45 @@ staleTime: 30 seconds
   - 오류가 발생하는 경우 다시 한번 시도를 할 수 있습니다.
 - Callbaks
   - 쿼리가 성공하거나 오류가 났을 때를 구별하여 조치를 취하도록 콜백을 전달할 수도 있습니다.
+
+## 3. 각각 상세설명
+
+### 1)isFetching
+
+- 비동기 쿼리가 해결되지 않았다.
+- Axios 호출 또는 GraphQL 호출 일 수도 있음
+
+### 2)isLoading
+
+- isFetching의 하위 집합
+- 가져오는 상태에 있는 것을 의미
+- 쿼리함수가 아직 해결되지 않았으며 캐시된 데이터도 없음
+- 즉, 데이터를 가져오는 중이며 표시할 캐시도 없다.
+
+### 3)isError
+
+- 데이터를 가져오는데 error가 발생하는 경우 기본적으로 3번 다시 시도를 한 후 데이터를 가지고 올 수 없다고 판단을 합니다.
+
+### 4)error
+
+- 어떤 오류가 나는지를 확인할 수 있습니다.
+
+예시)
+
+```jsx
+const { data, isError, isLoading, error } = useQuery("post", fetchPosts);
+if (isLoading) return <h3>Loading</h3>;
+if (isError)
+  return (
+    <>
+      <h3>Oops, Something is wrong</h3>
+      <p>{error.toString()}</p>
+    </>
+  );
+```
+
+위 경우 데이터를 3번 리페치 하기 전까지는 화면에 Loading이 표시되다가 Oops, Something is wrong + 에러메세지 가 표시되게 됩니다.
+
+### 5)onError
+
+- useQuery에 옵션으로 전달 할 수 있으며, 오류를 조금 더 세련되게 표시를 할 수 있습니다.

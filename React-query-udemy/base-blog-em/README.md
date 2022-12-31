@@ -1,15 +1,22 @@
 # Blog-em Ipsum
 
-### A React App for the Udemy course "React Query: Server State Management for React"
+- Jsonplaceholder를 이용
+- React Qeury concepts
+  - Fetching Data
+  - Loading / errror states
+  - React Query dev tools
+  - Pagination
+  - Prefeching
+  - Mutations
 
-## Installation
+## isFetching vs isLoading
 
-Run `npm install`
+isFetching
 
-## Running the App
-
-Run `npm start`. The app will be found at [http://localhost:3000]
-
-## Server
-
-This app uses the [JSON Placeholder](https://jsonplaceholder.typicode.com/) server.
+- 비동기 쿼리가 해결되지 않았다.
+- Axios 호출 또는 GraphQL 호출 일 수도 있음
+  isLoading
+- isFetching의 하위 집합
+- 가져오는 상태에 있는 것을 의미
+- 쿼리함수가 아직 해결되지 않았으며 캐시된 데이터도 없음
+- 즉, 데이터를 가져오는 중이며 표시할 캐시도 없다.
