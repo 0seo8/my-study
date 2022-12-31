@@ -18,7 +18,9 @@ export function Posts() {
   // replace with useQuery(더이상 하드 코딩된 배열X)
   //const data = [];
   // 첫번째 인자: key, 두번째인자: 쿼리에 대한 데이터를 가지고 오는 비동기 함수
-  const { data, isError, isLoading, error } = useQuery("post", fetchPosts);
+  const { data, isError, isLoading, error } = useQuery("post", fetchPosts, {
+    staleTime: 2000,
+  });
   if (isLoading) return <h3>Loading</h3>;
   if (isError)
     return (

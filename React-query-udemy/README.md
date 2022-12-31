@@ -117,4 +117,27 @@ if (isError)
 - 기본적으로 dev tools는 프로덕션 번들에 포함되어 있지 않습니다.
 - NODE_ENV변수에 따라 프로덕션 환경에 있는지 여부가 결정됩니다.
 - Create React 엡은 npm run build를 실행할 때만 NODE_ENV변수를 production으로 설정합니다. 그렇지 않은 경우 development 또는 testing으로 설정이 됩니다.
--
+
+## 4. Stale Data
+
+- 데이터 리페칭 실행에는 만료된 데이터 외에도, 여러 트리거가 있습니다.
+  - ex)컴포넌트가 다시 마운트 되거나, 윈도우가 다시 포커스 된 경우 등등
+- 단, 만료된 데이터인 경우에만 리페칭이 실시됩니다.
+- 데이터가 만료되었다고 판단하기 전까지 허영하는 시간이 staleTime입니다.
+
+```js
+const { data, isError, isLoading, error } = useQuery("post", fetchPosts, {
+  staleTime: 2000,
+});
+```
+
+### 4-2 stale Time vs cache Time
+
+- staleTime 은 리패칭할 때의 고려사항
+- 캐시는 나중에 다시 필요할 수도 있는 데이터용
+  - 특정 쿼리에 대한 활성 useQuery가 없는 경우, 해당 데이터는 콜드 스토로지로 이동
+  - 구성된 cacheTime이 지나면 캐시의 데이터가 만료되며, 유효시간의 기본값은 5분
+  - cacheTime이 관찰하는 시간의 양은, 특정 쿼리에 대한 useQuery가 활성화된 후 경과한 시간
+  - 페이지에 표시되는 컴포넌트가 특정 쿼리에 대해 useQuery를 사용한 시간을 의미
+- 캐시가 만료되면 가비지 컬렉션이 실행되고, 클라이언트는 데이터를 사용할 수 없다.
+- 데이터가 캐시되어 있는 동안에는 fetching할 때 사용을 할 수 있습니다.
