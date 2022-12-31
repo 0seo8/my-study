@@ -101,3 +101,20 @@ if (isError)
 ### 5)onError
 
 - useQuery에 옵션으로 전달 할 수 있으며, 오류를 조금 더 세련되게 표시를 할 수 있습니다.
+
+## 3. React Qeury Dev Tools
+
+### 3-1 React Qeury Dev Tools란?
+
+- 쿼리 키로 쿼리를 표시해 주며, active, inactive, stale 등 모든 쿼리의 상태를 알려줍니다.
+- 마지막으로 업데이트된 타임스탬프도 알려줍니다.
+- 쿼리에 의해 반환된 데이터를 확인할 수 있는 데이터 탐색기도 있습니다.
+- 쿼리를 볼 수 있는 쿼리 탐색기도 있습니다.
+- https://react-query.tanstack.com/devtools
+
+### 3-2 주의점
+
+- 기본적으로 dev tools는 프로덕션 번들에 포함되어 있지 않습니다.
+- NODE_ENV변수에 따라 프로덕션 환경에 있는지 여부가 결정됩니다.
+- Create React 엡은 npm run build를 실행할 때만 NODE_ENV변수를 production으로 설정합니다. 그렇지 않은 경우 development 또는 testing으로 설정이 됩니다.
+-
