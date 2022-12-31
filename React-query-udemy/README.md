@@ -319,3 +319,9 @@ export function Posts() {
   );
 }
 ```
+
+## 9. isFetching vs isLoading
+
+### isFetching
+
+-
