@@ -207,7 +207,7 @@ exports.cart = [{
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getOrElse = exports.fromUndefined = exports.isNone = exports.isSome = exports.none = exports.some = void 0;
+exports.map = exports.getOrElse = exports.fromUndefined = exports.isNone = exports.isSome = exports.none = exports.some = void 0;
 //some과 none타입의 값을 만들어 주는 함수
 var some = function some(value) {
   return {
@@ -244,6 +244,14 @@ var getOrElse = function getOrElse(oa, defaultValue) {
   return oa.value;
 };
 exports.getOrElse = getOrElse;
+//옵션 MAP
+var map = function map(oa, f) {
+  // 값이 없으면 값이 없는 상태를 유지
+  if ((0, exports.isNone)(oa)) return oa;
+  //값이 있으면 값을 함수에 적용
+  return (0, exports.some)(f(oa.value));
+};
+exports.map = map;
 },{}],"src/clip5.ts":[function(require,module,exports) {
 "use strict";
 
