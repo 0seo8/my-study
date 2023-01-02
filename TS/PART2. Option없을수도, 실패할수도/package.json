@@ -1,0 +1,16 @@
+{
+  "name": "ts",
+  "version": "1.0.0",
+  "description": "함수의 재활용성을 높이고 합성을 쉽게 하기 위해서는 가능한 한가지 의미 있는 작업을 하는 최소한의 의미를 가지는 순수 함수들을 만들고, 이 함수들을 마치 레고블록처럼 조합(합성)해서 더 큰 프로그래밍을 만들어나가야합니다.",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.9.4"
+  }
+}
